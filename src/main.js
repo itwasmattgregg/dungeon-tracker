@@ -28,7 +28,6 @@ const unsubscribe = firebase.auth()
     created () {
       if (firebaseUser) {
         this.user = firebaseUser
-        router.push('/home')
       }
     }
   })

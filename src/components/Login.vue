@@ -72,11 +72,11 @@ export default {
       }
       // The client SDK will parse the code from the link for you.
       firebase.auth().signInWithEmailLink(email, window.location.href)
-        .then(function (result) {
+        .then((result) => {
           // Clear email from storage.
-          console.log('woooo', result.user)
+          this.$root.$data.user = result.user
           window.localStorage.removeItem('emailForSignIn')
-          router.push('/home')
+          router.push('/profile')
           // You can access the new user via result.user
           // Additional user info profile not available via:
           // result.additionalUserInfo.profile == null

@@ -3,7 +3,7 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Welcome to Awesome App</h1>
+        <h1>Welcome to the D&amp;D Companion App</h1>
       </v-flex>
       <v-flex xs12 sm6 offset-sm3 mt-3>
         <p class=" text-xs-center">

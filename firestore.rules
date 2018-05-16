@@ -1,7 +1,9 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write;
+    match /stories/{story} {
+      allow read;
+      allow update, delete: if request.auth.uid == resource.data.owner;
+      allow create: if request.auth.uid != null;
     }
   }
 }

@@ -61,8 +61,7 @@
   export default {
     data () {
       return {
-        user: null,
-        appTitle: 'Awesome App',
+        appTitle: 'Dungeon Tracker',
         sidebar: false,
       }
     },
@@ -70,23 +69,26 @@
       menuItems () {
         if (this.user) {
           return [
-            { title: 'Home', path: '/home', icon: 'home' }
+            { title: 'Home', path: '/profile', icon: 'home' },
+            { title: 'Stories', path: '/stories', icon: 'local_library' },
+            { title: 'Quests', path: '/quests', icon: 'assignment_late' }
           ]
         } else {
           return [
             { title: 'Sign In', path: '/login', icon: 'lock_open' }
           ]
         }
-      }
+      },
+      user () {
+        return this.$root.$data.user
+      },
     },
     methods: {
       userSignOut () {
         firebase.auth().signOut()
         router.push('/')
+        this.$root.$data.user = null
       }
     },
-    created () {
-      this.user = this.$root.$data.user
-    }
   }
 </script>
