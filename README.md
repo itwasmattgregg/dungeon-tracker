@@ -14,6 +14,10 @@ npm run dev
 # build for production with minification
 npm run build
 
+# deploys rules and /dist to firebase hosting
+# you'll need to log in to firebase CLI first and have run npm run build
+firebase deploy
+
 # build for production and view the bundle analyzer report
 npm run build --report
 

@@ -12,7 +12,7 @@
         </p>
       </v-flex>
       <v-flex xs12 sm6 offset-sm3 class="text-xs-center" mt-5>
-        <v-btn to="/login">Sign In</v-btn>
+        <v-btn to="/login" v-if="!$root.$data.user">Sign In</v-btn>
       </v-flex>
     </v-layout>
   </v-container>

@@ -6,8 +6,9 @@
         <p v-if="!user.displayName">Please let us know the name of your character.</p>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <v-layout justify-center row wrap>
       <v-flex xs12 md6>
+        <h2>Edit Profile</h2>
         <form v-on:submit.prevent="saveUser">
           <v-text-field
             name="email"
@@ -23,11 +24,11 @@
             type="text"
             v-model="user.displayName"
             ></v-text-field>
-          <v-btn type="submit" :loading="userSaving" color="info">Save Profile</v-btn>
+          <v-btn type="submit" :loading="userSaving" :color="userSaveSuccess ? 'success' : userSaveFail ? 'error' : 'info'">Save</v-btn>
         </form>
       </v-flex>
     </v-layout>
-    <v-layout row wrap>
+    <!-- <v-layout row wrap>
       <v-flex xs12 md6>
         <form>
           <v-text-field
@@ -52,49 +53,60 @@
         <p>{{story.name}}</p>
         <p>{{story.story}}</p>
       </v-flex>
-    </v-layout>
+    </v-layout> -->
   </v-container>
 </template>
 
 <script>
 import db from '../firebaseInit'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 export default {
   data () {
     return {
       loading: true,
       userSaving: false,
+      userSaveSuccess: false,
+      userSaveFail: false,
       story: {},
-      user: {},
+      user: {
+        displayName: '',
+        email: '',
+      },
     }
   },
   methods: {
     saveUser () {
       this.userSaving = true
-      this.$root.$data.user.updateProfile(this.user).then(() => {
-        console.log('saved!')
+      this.$root.$data.user.updateProfile({
+        displayName: this.user.displayName,
+        email: this.user.email,
+      }).then(() => {
         this.userSaving = false
+        this.userSaveSuccess = true
+        this.userSaveFail = false
       }, (error) => {
-        console.log(error)
+        console.error(error)
         this.userSaving = false
-        // An error happened.
+        this.userSaveSuccess = false
+        this.userSaveFail = true
       })
     },
-    save () {
-      this.story.owner = this.$root.$data.user.uid
-      this.story.created = firebase.firestore.FieldValue.serverTimestamp()
-      db.collection('stories').doc('aLUwu707mw26ZIH3oIAh').set(this.story)
-      .then(function () {
-        console.log('Document successfully written!')
-      })
-      .catch(function (error) {
-        console.error('Error writing document: ', error)
-      })
-    },
+    // save () {
+    //   this.story.owner = this.$root.$data.user.uid
+    //   this.story.created = firebase.firestore.FieldValue.serverTimestamp()
+    //   db.collection('stories').doc('aLUwu707mw26ZIH3oIAh').set(this.story)
+    //   .then(function () {
+    //     console.log('Document successfully written!')
+    //   })
+    //   .catch(function (error) {
+    //     console.error('Error writing document: ', error)
+    //   })
+    // },
   },
   created () {
-    this.user = this.$root.$data.user
+    this.user.displayName = this.$root.$data.user.displayName
+    this.user.email = this.$root.$data.user.email
     db.collection('stories').doc('aLUwu707mw26ZIH3oIAh')
       .onSnapshot((doc) => {
         this.story = doc.data()
