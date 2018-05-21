@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="sidebar" app>
+    <v-navigation-drawer v-model="sidebar" dark disable-resize-watcher app>
       <v-list>
         <v-list-tile
           v-for="item in menuItems"

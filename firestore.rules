@@ -5,6 +5,10 @@ service cloud.firestore {
       allow update, delete: if request.auth.uid == resource.data.owner;
       allow create: if request.auth.uid != null;
     }
+    match /quests/{quest} {
+      allow read;
+      allow update, delete, create: if request.auth.uid != null;
+    }
     match /users/{userId} {
       allow read, update, delete: if request.auth.uid == userId;
       allow create: if request.auth.uid != null;
