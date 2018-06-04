@@ -28,39 +28,10 @@
         </form>
       </v-flex>
     </v-layout>
-    <!-- <v-layout row wrap>
-      <v-flex xs12 md6>
-        <form>
-          <v-text-field
-            name="name"
-            label="Name"
-            id="name"
-            type="text"
-            v-model="story.name"
-            v-on:change="save"
-            required></v-text-field>
-          <v-text-field
-            name="story"
-            label="Story"
-            id="story"
-            type="text"
-            v-model="story.story"
-            v-on:change="save"
-            required></v-text-field>
-        </form>
-      </v-flex>
-      <v-flex xs12 md6>
-        <p>{{story.name}}</p>
-        <p>{{story.story}}</p>
-      </v-flex>
-    </v-layout> -->
   </v-container>
 </template>
 
 <script>
-import db from '../firebaseInit'
-// import firebase from 'firebase'
-
 export default {
   data () {
     return {
@@ -92,27 +63,10 @@ export default {
         this.userSaveFail = true
       })
     },
-    // save () {
-    //   this.story.owner = this.$root.$data.user.uid
-    //   this.story.created = firebase.firestore.FieldValue.serverTimestamp()
-    //   db.collection('stories').doc('aLUwu707mw26ZIH3oIAh').set(this.story)
-    //   .then(function () {
-    //     console.log('Document successfully written!')
-    //   })
-    //   .catch(function (error) {
-    //     console.error('Error writing document: ', error)
-    //   })
-    // },
   },
   created () {
     this.user.displayName = this.$root.$data.user.displayName
     this.user.email = this.$root.$data.user.email
-    db.collection('stories').doc('aLUwu707mw26ZIH3oIAh')
-      .onSnapshot((doc) => {
-        this.story = doc.data()
-        var source = doc.metadata.hasPendingWrites ? 'Local' : 'Server'
-        console.log(source, ' data: ', doc.data())
-      })
   },
 }
 </script>

@@ -46,6 +46,8 @@ export default {
       .onSnapshot((querySnapshot) => {
         querySnapshot.forEach(doc => {
           this.stories.push(doc.data())
+          var source = doc.metadata.hasPendingWrites ? 'Local' : 'Server'
+          console.log(source, ' data: ', doc.data())
         })
       })
   },
