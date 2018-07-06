@@ -40,6 +40,7 @@ const router = new Router({
   routes
 })
 
+// TODO: Change this out with vue-meta?
 // This callback runs before every route change, including on page load.
 router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
