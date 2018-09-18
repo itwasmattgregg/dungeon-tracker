@@ -3,10 +3,8 @@
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5 mb-5>
         <h1>Stories</h1>
-        <v-btn
-          to="add-story">
-          Create Story
-        </v-btn>
+     <story-form/>
+       
 
       </v-flex>
     </v-layout>
@@ -28,12 +26,16 @@
 
 <script>
 import db from '../firebaseInit'
+import storyForm from './StoryForm.vue'
 
 export default {
   data () {
     return {
       stories: []
     }
+  },
+  components: {
+    storyForm
   },
   computed: {
     currentUser () {

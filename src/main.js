@@ -5,12 +5,17 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import firebase from 'firebase'
+import VueMoment from 'vue-moment'
 import VueFirestore from 'vue-firestore'
 import 'vuetify/dist/vuetify.min.css'
 
 import './firebaseInit'
 
+/**
+ * Register Vue Plugins in the global scope
+ */
 Vue.use(Vuetify)
+Vue.use(VueMoment)
 Vue.use(VueFirestore)
 
 Vue.config.productionTip = false
