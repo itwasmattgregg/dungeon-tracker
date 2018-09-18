@@ -5,11 +5,13 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import firebase from 'firebase'
+import VueFirestore from 'vue-firestore'
 import 'vuetify/dist/vuetify.min.css'
 
 import './firebaseInit'
 
 Vue.use(Vuetify)
+Vue.use(VueFirestore)
 
 Vue.config.productionTip = false
 

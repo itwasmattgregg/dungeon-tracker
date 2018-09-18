@@ -36,14 +36,10 @@ export default {
     questForm,
     quest,
   },
-  created () {
-    db.collection('quests')
-    .onSnapshot((querySnapshot) => {
-      this.quests = []
-      querySnapshot.forEach(doc => {
-        this.quests.push(doc.data())
-      })
-    })
+  firestore () {
+    return {
+      quests: db.collection('quests'),
+    }
   },
 }
 </script>

@@ -44,10 +44,9 @@ export default {
     db.collection('stories')
       .orderBy('created')
       .onSnapshot((querySnapshot) => {
+        this.stories = []
         querySnapshot.forEach(doc => {
           this.stories.push(doc.data())
-          var source = doc.metadata.hasPendingWrites ? 'Local' : 'Server'
-          console.log(source, ' data: ', doc.data())
         })
       })
   },

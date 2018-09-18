@@ -12,7 +12,15 @@
           </v-flex>
           <v-flex xs9>
             <div>
-              <div class="headline">{{quest.name}}</div>
+              <div v-if="!editing" class="headline">{{quest.name}}</div>
+              <v-text-field
+                v-if="editing"
+                name="name"
+                label="Quest Name"
+                id="name"
+                type="text"
+                v-model="quest.name"
+              ></v-text-field>
               <p>Location: {{quest.location}}</p>
               <p>Return to: {{quest.returnTo}}</p>
               <p>Rewards:
@@ -31,6 +39,19 @@
       </v-container>
       <v-card-actions class="actions">
         <v-spacer></v-spacer>
+        <v-btn
+          icon
+          v-if="!editing"
+          v-on:click="editing = true"
+        >
+          <v-icon>edit</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="editing"
+          v-on:click="editing = false"
+        >
+          save
+        </v-btn>
         <v-btn icon>
           <v-icon>check</v-icon>
         </v-btn>
@@ -43,6 +64,11 @@
 import moment from 'moment'
 export default {
   name: 'quest',
+  data () {
+    return {
+      editing: false,
+    }
+  },
   props: {
     quest: {
       type: Object,
@@ -67,7 +93,7 @@ export default {
   .actions {
     background-color: #fff;
   }
-  
+
   .rewards-list {
     background-color: transparent;
     color: #fff;
