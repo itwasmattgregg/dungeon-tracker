@@ -11,7 +11,7 @@
           </v-list-tile-action>
           <v-list-tile-content>{{ item.title }}</v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="userSignOut" v-if="user">
+        <v-list-tile @click="logout" v-if="user">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -40,23 +40,22 @@
           <v-icon left dark>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
-        <v-btn flat @click="userSignOut" v-if="user">
+        <v-btn flat @click="logout" v-if="user">
           <v-icon left>exit_to_app</v-icon>
           Sign Out
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    
+
     <v-content>
       <router-view :user="user"></router-view>
     </v-content>
-    
+
   </v-app>
 </template>
 
 <script>
-  import firebase from 'firebase'
-  import router from './router'
+  import {mapGetters, mapActions} from 'vuex'
 
   export default {
     data () {
@@ -79,16 +78,14 @@
           ]
         }
       },
-      user () {
-        return this.$root.$data.user
-      },
+      ...mapGetters([
+        'user',
+      ]),
     },
     methods: {
-      userSignOut () {
-        firebase.auth().signOut()
-        router.push('/')
-        this.$root.$data.user = null
-      }
+      ...mapActions([
+        'logout'
+      ]),
     },
   }
 </script>
