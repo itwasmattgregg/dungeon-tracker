@@ -3,16 +3,29 @@
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5 mb-5>
         <h1>Quests</h1>
+        {{loading}}
         <quest-form></quest-form>
       </v-flex>
       <v-flex xs12 class="text-xs-center" mt-5 mb-5>
         <v-container fluid grid-list-md>
-          <v-layout row wrap>
+          <v-layout row wrap v-if="quests.length > 0">
             <v-flex
+              xs12 sm6
               v-for="quest in quests"
               :key="quest.id"
             >
-              <quest :quest="quest"></quest>
+              <quest
+                v-on:complete-quest="archiveQuest(quest)"
+                :quest="quest"
+              >
+              </quest>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap v-else>
+            <v-flex
+              xs12
+            >
+              <h2>Looks like you don't have any quests right now. Create a new one by clicking the button in the lower left.</h2>
             </v-flex>
           </v-layout>
         </v-container>
@@ -30,20 +43,34 @@ export default {
   data () {
     return {
       quests: [],
+      loading: true,
     }
   },
   components: {
     questForm,
-    quest,
+    quest
+  },
+  watch: {
+    quests () {
+      if (this.quests.length) {
+        this.loading = false
+      }
+    }
   },
   firestore () {
     return {
-      quests: db.collection('quests'),
+      quests: db.collection('quests').where('status', '==', 'open')
     }
   },
+  methods: {
+    archiveQuest (quest) {
+      db.collection('quests').doc(quest['.key']).update({
+        status: 'completed'
+      })
+    },
+  }
 }
 </script>
 
 <style>
-
 </style>

@@ -1,26 +1,11 @@
 <template>
   <div class="quest">
-    <v-card color="teal" class="white--text">
+    <v-card dark>
       <v-container fluid grid-list-lg>
         <v-layout row>
-          <v-flex xs3>
-            <v-card-media
-              src="/static/doc-images/cards/halcyon.png"
-              height="125px"
-              contain
-            ></v-card-media>
-          </v-flex>
-          <v-flex xs9>
-            <div>
-              <div v-if="!editing" class="headline">{{quest.name}}</div>
-              <v-text-field
-                v-if="editing"
-                name="name"
-                label="Quest Name"
-                id="name"
-                type="text"
-                v-model="quest.name"
-              ></v-text-field>
+          <v-flex xs12>
+            <div v-if="!editing">
+              <div class="headline">{{quest.name}}</div>
               <p>Location: {{quest.location}}</p>
               <p>Return to: {{quest.returnTo}}</p>
               <p>Rewards:
@@ -33,6 +18,40 @@
                 </v-list>
               </p>
               <p>Created {{formattedTime}}</p>
+            </div>
+            <div v-else>
+              <v-text-field
+                name="name"
+                label="Quest Name"
+                id="name"
+                type="text"
+                dark
+                v-model="quest.name"
+              ></v-text-field>
+              <v-text-field
+                name="location"
+                label="Location"
+                id="location"
+                type="text"
+                dark
+                v-model="quest.location"
+              ></v-text-field>
+              <v-text-field
+                name="return-to"
+                label="Return To (Person)"
+                id="return-to"
+                type="text"
+                dark
+                v-model="quest.returnTo"
+              ></v-text-field>
+              <v-select
+                v-model="quest.rewards"
+                label="Rewards"
+                hint="Type a reward and hit enter to add"
+                chips
+                deletable-chips
+                tags
+              ></v-select>
             </div>
           </v-flex>
         </v-layout>
@@ -48,11 +67,14 @@
         </v-btn>
         <v-btn
           v-if="editing"
-          v-on:click="editing = false"
+          v-on:click="saveQuest"
         >
           save
         </v-btn>
-        <v-btn icon>
+        <v-btn
+          icon
+          v-on:click="$emit('complete-quest')"
+        >
           <v-icon>check</v-icon>
         </v-btn>
       </v-card-actions>
@@ -62,6 +84,9 @@
 
 <script>
 import moment from 'moment'
+import db from '../firebaseInit'
+import omit from 'lodash/omit'
+
 export default {
   name: 'quest',
   data () {
@@ -82,6 +107,14 @@ export default {
       }
     }
   },
+  methods: {
+    saveQuest () {
+      const questToSave = omit(this.quest, '.key')
+      db.collection('quests').doc(this.quest['.key']).update(questToSave).then(() => {
+        this.editing = false
+      })
+    }
+  }
 }
 </script>
 
@@ -90,12 +123,12 @@ export default {
     text-align: left;
   }
 
-  .actions {
-    background-color: #fff;
-  }
+  // .actions {
+  //   background-color: #fff;
+  // }
 
-  .rewards-list {
-    background-color: transparent;
-    color: #fff;
-  }
+  // .rewards-list {
+  //   background-color: transparent;
+  //   color: #fff;
+  // }
 </style>

@@ -40,6 +40,7 @@
           label="Rewards"
           hint="Type a reward and hit enter to add"
           chips
+          deletable-chips
           tags
         ></v-select>
         <v-btn type="submit">Add Quest</v-btn>
@@ -116,7 +117,7 @@ export default {
     }
     &.slide-up-enter, &.slide-up-leave-to {
       opacity: 0;
-      bottom: 0;
+      bottom: 25px;
     }
   }
 </style>

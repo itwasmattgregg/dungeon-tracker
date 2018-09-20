@@ -22,7 +22,7 @@
             label="Character Name"
             id="character"
             type="text"
-            v-model="user.displayName"
+            v-model="user.name"
             ></v-text-field>
           <v-btn type="submit" :loading="userSaving" :color="userSaveSuccess ? 'success' : userSaveFail ? 'error' : 'info'">Save</v-btn>
         </form>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -40,33 +42,35 @@ export default {
       userSaveSuccess: false,
       userSaveFail: false,
       story: {},
-      user: {
-        displayName: '',
-        email: '',
-      },
     }
   },
+  computed: {
+    ...mapGetters([
+      'user',
+    ])
+  },
+
   methods: {
     saveUser () {
-      this.userSaving = true
-      this.$root.$data.user.updateProfile({
-        displayName: this.user.displayName,
-        email: this.user.email,
-      }).then(() => {
-        this.userSaving = false
-        this.userSaveSuccess = true
-        this.userSaveFail = false
-      }, (error) => {
-        console.error(error)
-        this.userSaving = false
-        this.userSaveSuccess = false
-        this.userSaveFail = true
-      })
+      // this.userSaving = true
+      // this.$root.$data.user.updateProfile({
+      //   displayName: this.user.displayName,
+      //   email: this.user.email,
+      // }).then(() => {
+      //   this.userSaving = false
+      //   this.userSaveSuccess = true
+      //   this.userSaveFail = false
+      // }, (error) => {
+      //   console.error(error)
+      //   this.userSaving = false
+      //   this.userSaveSuccess = false
+      //   this.userSaveFail = true
+      // })
     },
   },
   created () {
-    this.user.displayName = this.$root.$data.user.displayName
-    this.user.email = this.$root.$data.user.email
+    // this.user.displayName = this.$root.$data.user.displayName
+    // this.user.email = this.$root.$data.user.email
   },
 }
 </script>
