@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import db from '../firebaseInit'
 import { mapGetters } from 'vuex'
 import storyForm from './StoryForm.vue'
@@ -40,6 +41,11 @@ export default {
       stories: db.collection('stories')
     }
   },
+  firestore () {
+    return {
+      stories: db.collection('stories'),
+    }
+  },
   components: {
     storyForm
   },
@@ -49,15 +55,9 @@ export default {
     },
   },
   mounted () {
-    db.collection('stories')
-      .orderBy('created')
-      .onSnapshot((querySnapshot) => {
-        this.stories = []
-        querySnapshot.forEach(doc => {
-          this.stories.push(doc.data())
-        })
-      })
+   
   },
+  
 }
 </script>
 

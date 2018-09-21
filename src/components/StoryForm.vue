@@ -1,48 +1,47 @@
 <template>
-  <form v-on:submit.prevent="createQuest">
-      <v-menu
-        ref="menu2"
-        :close-on-content-click="false"
-        v-model="menu2"
-        :nudge-right="40"
-        :return-value.sync="session"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="session"
-          label="Picker without buttons"
-          prepend-icon="event"
-          readonly
-        ></v-text-field>
-        <v-date-picker v-model="session" @input="$refs.menu2.save(session)"></v-date-picker>
+  <form v-on:submit.prevent="createStory">
+    <v-flex xs3>
+      <v-text-field name="author"
+                    label="author"
+                    id="author"
+                    type="text"
+                    disabled
+                    v-model="author"
+                    xs6></v-text-field>
+    </v-flex>
+    <v-flex xs6>
 
-      </v-menu>
+    <v-menu ref="pickerShowing"
+            :close-on-content-click="false"
+            v-model="pickerShowing"
+            :nudge-right="40"
+            :return-value.sync="session"
+            lazy
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px"
+            xs6>
+      <v-text-field slot="activator"
+                    v-model="sessionDate"
+                    label="Select date of session"
+                    prepend-icon="event"
+                    readonly></v-text-field>
+      <v-date-picker v-model="session"
+                     @input="$refs.pickerShowing.save(session)"
+                     no-title></v-date-picker>
 
+    </v-menu>
+    </v-flex>
+    <wysiwyg v-model="notes"/>
+    <v-text-field name="notes"
+                  label="Notes"
+                  id="notes"
+                  type="textarea"
+                  v-model="notes"></v-text-field>
 
-
-    <v-text-field
-    readonly      name="location"
-      label="Location"
-      id="location"
-      type="text"
-      v-model="location"
-      ></v-text-field>
-      <v-text-field
-      name="notes"
-      label="Notes"
-      id="notes"
-      type="text"
-      v-model="notes"
-      ></v-text-field>
-
-        
-
-    <v-btn plus type="submit">Add Story</v-btn>
+    <v-btn plus
+           type="submit">Add Story</v-btn>
   </form>
 </template>
 
@@ -50,42 +49,46 @@
 import firebase from 'firebase'
 import db from '../firebaseInit'
 
+
 export default {
-  name: 'story-form',
-  data () {
+  name: "story-form",
+  data() {
     return {
-      name: '',
-      location: '',
-      notes: '',
-      session: '',
-      author: '',
+      pickerShowing: false,
+      notes: "",
+      session: "",
+    };
+  },
+  firestore () {
+    return {
+      stories: db.collection('stories'),
+    }
+  },
+  computed: {
+    sessionDate() {
+      if (!this.session) return null      
+        return this.$moment(this.session).fromNow()
+      
+    },
+    author(){
+           return  this.$root.$data.user.displayName
     }
   },
   methods: {
-    createQuest () {
-      db.collection('quests').add({
-        name: this.name,
-        location: this.location,
-        returnTo: this.returnTo,
-        rewards: this.rewards,
-        status: 'open',
-        owner: this.$root.$data.user.uid,
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then((docRef) => {
-        this.resetFields()
-      })
-      .catch((error) => {
+    createStory(){
+      db.collection('stories').add({
+        notes: this.notes,
+        session: this.session,
+        owner: this.$root.$data.user.uid
+      }).catch((error) => {
         console.error('Error adding document: ', error)
       })
-    },
-    resetFields () {
-      Object.assign(this.$data, this.$options.data.call(this))
-    },
-  },
-}
+
+    
+    }
+  }
+};
 </script>
 
 <style>
-
 </style>
