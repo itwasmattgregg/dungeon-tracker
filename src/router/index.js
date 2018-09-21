@@ -21,9 +21,9 @@ const routerOptions = [
       title: 'Login - Dungeon Tracker',
     },
   },
-  { path: '/profile', component: 'Home', meta: { requiresAuth: true, title: 'Profile - Dungeon Tracker' } },
-  { path: '/stories', component: 'Stories', meta: { requiresAuth: true, title: 'Stories - Dungeon Tracker' } },
-  { path: '/quests', component: 'Quests', meta: { requiresAuth: true, title: 'Quests - Dungeon Tracker' } },
+  { path: '/profile', component: 'Home', meta: { title: 'Profile - Dungeon Tracker' } },
+  { path: '/stories', component: 'Stories', meta: { title: 'Stories - Dungeon Tracker' } },
+  { path: '/quests', component: 'Quests', meta: { title: 'Quests - Dungeon Tracker' } },
 ]
 
 const routes = routerOptions.map(route => {
@@ -40,7 +40,19 @@ const router = new Router({
   routes
 })
 
-// TODO: Change this out with vue-meta?
+router.beforeEach((to, from, next) => {
+  const currentUser = firebase.auth().currentUser
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+
+  if (requiresAuth && !currentUser) {
+    next('/sign-in')
+  } else if (requiresAuth && currentUser) {
+    next()
+  } else {
+    next()
+  }
+})
+
 // This callback runs before every route change, including on page load.
 router.beforeEach((to, from, next) => {
   // This goes through the matched routes from last to first, finding the closest route with a title.
@@ -76,18 +88,6 @@ router.beforeEach((to, from, next) => {
   .forEach(tag => document.head.appendChild(tag))
 
   next()
-})
-
-router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const isAuthenticated = firebase.auth().currentUser
-  if (requiresAuth && !isAuthenticated) {
-    next('/login')
-  } else if (isAuthenticated && to.path === '/login') {
-    next('/profile')
-  } else {
-    next()
-  }
 })
 
 export default router

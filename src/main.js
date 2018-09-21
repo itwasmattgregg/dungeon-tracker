@@ -7,6 +7,8 @@ import Vuetify from 'vuetify'
 import firebase from 'firebase'
 import VueMoment from 'vue-moment'
 import VueFirestore from 'vue-firestore'
+import store from './store'
+
 import 'vuetify/dist/vuetify.min.css'
 
 import './firebaseInit'
@@ -20,23 +22,23 @@ Vue.use(VueFirestore)
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
-const unsubscribe = firebase.auth()
-.onAuthStateChanged((firebaseUser) => {
-  new Vue({
-    el: '#app',
-    router,
-    render: h => h(App, this.user),
-    data: () => {
-      return {
-        user: null
+firebase.auth()
+  .onAuthStateChanged((user) => {
+    /* eslint-disable no-new */
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      render: h => h(App, this.user),
+      data: () => {
+        return {
+          user: null
+        }
+      },
+      created () {
+        if (user) {
+          this.$store.dispatch('autoSignIn', user)
+        }
       }
-    },
-    created () {
-      if (firebaseUser) {
-        this.user = firebaseUser
-      }
-    }
+    })
   })
-  unsubscribe()
-})
