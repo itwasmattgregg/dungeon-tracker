@@ -8,10 +8,16 @@ import 'vuetify/dist/vuetify.min.css'
 import VueMoment from 'vue-moment'
 import VueFirestore from 'vue-firestore'
 import store from './store'
+import firebase from 'firebase'
 
 import 'vuetify/dist/vuetify.min.css'
 
 import './firebaseInit'
+
+
+/**
+ * Components in the global scope
+ */
 
 /**
  * Register Vue Plugins in the global scope

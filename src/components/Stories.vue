@@ -3,12 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5 mb-5>
         <h1>Stories</h1>
-     <story-form/>
-       
-
       </v-flex>
-    </v-layout>
-    <v-layout row wrap>
       <v-flex xs12 sm6 v-for="(story, index) in stories" :key="index">
         <v-card mb-3 color="blue-grey darken-2" class="story-card white--text">
           <v-card-title primary-title>
@@ -21,6 +16,7 @@
         </v-card>
       </v-flex>
     </v-layout>
+     <story-form/>
   </v-container>
 </template>
 
@@ -41,19 +37,10 @@ export default {
       stories: db.collection('stories')
     }
   },
-  firestore () {
-    return {
-      stories: db.collection('stories'),
-    }
-  },
   components: {
     storyForm
   },
-  computed: {
-    currentUser () {
-      return this.$root.$data.user.uid
-    },
-  },
+
   mounted () {
    
   },

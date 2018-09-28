@@ -1,20 +1,9 @@
 <template>
   <div>
-    <v-btn
-      icon
-      color="pink"
-      dark
-      fixed
-      bottom
-      right
-      fab
-      v-on:click="isVisible = !isVisible"
-    >
-      <v-icon :class="{'add-btn-active': isVisible}">add</v-icon>
-    </v-btn>
-    <transition name="slide-up">
-      <form v-if="isVisible" class="quest-form" v-on:submit.prevent="createQuest">
+    <form-card>
+      <form class="quest-form" v-on:submit.prevent="createQuest">
         <v-text-field
+          ref="name"
           name="name"
           label="Name"
           id="name"
@@ -45,16 +34,22 @@
         ></v-select>
         <v-btn type="submit">Add Quest</v-btn>
       </form>
-    </transition>
+    </form-card>
+      
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
 import db from '../firebaseInit'
+import FormCard from './FormCard'
+
 
 export default {
   name: 'quest-form',
+  components: {
+    FormCard
+  },
   data () {
     return {
       isVisible: false,
@@ -95,30 +90,11 @@ export default {
       Object.assign(this.$data, this.$options.data.call(this))
     },
   },
+
 }
 </script>
 
 <style lang="scss" scoped>
-  .add-btn-active {
-    transform: rotate(45deg);
-  }
-  .quest-form {
-    position: fixed;
-    bottom: 45px;
-    right: 45px;
-    width: 300px;
-    z-index: 3;
-    background: white;
-    padding: 30px;
-    border-radius: 2px;
-    box-shadow: -2px 2px 4px rgba(0,0,0,0.2);
-    &.slide-up-enter-active, &.slide-up-leave-active {
-      transition: opacity .5s, bottom .5s;
-    }
-    &.slide-up-enter, &.slide-up-leave-to {
-      opacity: 0;
-      bottom: 25px;
-    }
-  }
+  
 </style>
 
