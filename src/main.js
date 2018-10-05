@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import '@fortawesome/fontawesome-free/css/all.css'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueMoment from 'vue-moment'
@@ -22,7 +23,9 @@ import './firebaseInit'
 /**
  * Register Vue Plugins in the global scope
  */
-Vue.use(Vuetify)
+Vue.use(Vuetify,{
+  iconfont: 'fa'
+})
 Vue.use(VueMoment)
 Vue.use(VueFirestore)
 

@@ -48,7 +48,7 @@ export default {
     position: fixed;
     bottom: 45px;
     right: 45px;
-    width: 300px;
+    min-width: 300px;
     z-index: 3;
     background: white;
     padding: 30px;
