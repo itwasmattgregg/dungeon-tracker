@@ -6,7 +6,7 @@
           <v-flex xs12>
             <div v-if="!editing">
               <div class="headline">{{quest.name}}</div>
-              <p>Location: {{quest.location}}</p>
+              <p>Location: {{quest.location.name}}</p>
               <p>Return to: {{quest.returnTo}}</p>
               <p>Rewards:
                 <v-list dense class="rewards-list">
@@ -34,7 +34,7 @@
                 id="location"
                 type="text"
                 dark
-                v-model="quest.location"
+                v-model="quest.location.name"
               ></v-text-field>
               <v-text-field
                 name="return-to"
@@ -61,21 +61,30 @@
         <v-btn
           icon
           v-if="!editing"
-          v-on:click="editing = true"
+          class="button--edit"
+          @click="editing = true"
         >
           <v-icon>edit</v-icon>
         </v-btn>
         <v-btn
           v-if="editing"
-          v-on:click="saveQuest"
+          @click="saveQuest"
         >
           save
         </v-btn>
         <v-btn
+          v-if="!editing"
           icon
           v-on:click="$emit('complete-quest')"
         >
           <v-icon>check</v-icon>
+        </v-btn>
+        <v-btn
+          icon
+          v-if="editing"
+          @click="deleteQuest(quest)"
+        >
+          <v-icon>delete</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -113,6 +122,10 @@ export default {
       db.collection('quests').doc(this.quest['.key']).update(questToSave).then(() => {
         this.editing = false
       })
+    },
+    deleteQuest(quest){
+      db.collection('quests').doc(quest['.key']).delete();
+      
     }
   }
 }
@@ -121,6 +134,14 @@ export default {
 <style lang="scss" scoped>
   .quest {
     text-align: left;
+  }
+
+  .button--edit {
+    opacity: .3;
+    transition: all .3s ease;
+    &:hover {
+      opacity: 1;
+    }
   }
 
   // .actions {

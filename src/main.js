@@ -10,6 +10,7 @@ import VueMoment from 'vue-moment'
 import VueFirestore from 'vue-firestore'
 import store from './store'
 import firebase from 'firebase'
+import PortalVue from 'portal-vue'
 
 import 'vuetify/dist/vuetify.min.css'
 
@@ -28,6 +29,7 @@ Vue.use(Vuetify,{
 })
 Vue.use(VueMoment)
 Vue.use(VueFirestore)
+Vue.use(PortalVue)
 
 Vue.config.productionTip = false
 

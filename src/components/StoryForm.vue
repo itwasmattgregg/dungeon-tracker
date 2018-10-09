@@ -39,10 +39,15 @@
       </v-layout>
 
       <v-flex xs12>
-        <ty-editor />
+        <!-- <ty-editor /> -->
+        <!-- TODO:: remove temporary editor for ty-editor -->
+        <v-textarea
+        outline
+        v-model="entry"
+        placeholder="write your thoughts here..."
+        ></v-textarea>
       </v-flex>
 
-      <!-- <ty-editor/> -->
 
 
     </form>
@@ -67,7 +72,7 @@ export default {
   data() {
     return {
       pickerShowing: false,
-      notes: "",
+      entry: '',
       session: "",
     };
   },

@@ -1,12 +1,11 @@
 <template>
   <v-container fluid grid-list-xl>
     <v-layout row wrap>
-      <v-flex xs12 class="text-xs-center" mt-5 mb-5>
+      <v-flex xs12 class="text-xs-center" my-2>
         <h1>Quests</h1>
-        {{loading}}
         <quest-form></quest-form>
       </v-flex>
-      <v-flex xs12 class="text-xs-center" mt-5 mb-5>
+      <v-flex xs12 class="text-xs-center" my-1>
         <v-container fluid grid-list-md>
           <v-layout row wrap v-if="quests.length > 0">
             <v-flex
@@ -25,6 +24,7 @@
             <v-flex
               xs12
             >
+            <portal-target name="add-quest-modal"></portal-target>
               <h2>Looks like you don't have any quests right now. Create a new one by clicking the button in the lower left.</h2>
             </v-flex>
           </v-layout>
