@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     closeCard() {
-      console.log("close me jerry");
+      isVisible = false
     }
   }
 };
@@ -67,7 +67,7 @@ export default {
 
 .ty-scale-enter-active,
 .ty-scale-leave-active {
-  transition: transform 0.4s ease-in;
+  transition: transform 0.2s ease-in;
   transform-origin: bottom right;
   transition-timing-function: cubic-bezier(0.87, 0.11, 0.06, 1.24);
 }

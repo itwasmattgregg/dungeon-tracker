@@ -29,7 +29,7 @@ const routerOptions = [
 const routes = routerOptions.map(route => {
   return {
     ...route,
-    component: () => import(`@/components/${route.component}.vue`)
+    component: () => import(`@/components/views/${route.component}.vue`)
   }
 })
 

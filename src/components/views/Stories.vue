@@ -22,9 +22,9 @@
 
 <script>
 import firebase from 'firebase'
-import db from '../firebaseInit'
+import db from '../../firebaseInit'
 import { mapGetters } from 'vuex'
-import storyForm from './StoryForm.vue'
+import storyForm from '../StoryForm.vue'
 
 export default {
   computed: {
