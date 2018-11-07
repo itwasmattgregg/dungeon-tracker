@@ -39,13 +39,8 @@
       </v-layout>
 
       <v-flex xs12>
-        <!-- <ty-editor /> -->
-        <!-- TODO:: remove temporary editor for ty-editor -->
-        <v-textarea
-        outline
-        v-model="entry"
-        placeholder="write your thoughts here..."
-        ></v-textarea>
+        <ty-editor />
+       
       </v-flex>
 
 

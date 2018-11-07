@@ -36,17 +36,17 @@
                       chips
                       deletable-chips
                       multiple></v-combobox>
-          <v-btn @click="addNotes = !addNotes">Add Notes</v-btn>
+          <v-btn @click="notesVisible = !notesVisible" v-text="notesBtn"/>
           <v-btn type="submit">Add Quest</v-btn>
         </div>
         <div class="right"
-             :class="{'right--closed': !addNotes}">
+             :class="{'right--closed': !notesVisible}">
           <v-textarea placeholder="Quest notes...."
                       :rows="10"
                       v-model="form.notes"
                       browser-autocomplete
                       autofocus
-                      v-if="addNotes">
+                      v-if="notesVisible">
 
           </v-textarea>
         </div>
@@ -77,7 +77,7 @@ export default {
         rewards: "",
         notes: ""
       },
-      addNotes: false,
+      notesVisible: false,
       locations: [],
       people: []
     };
@@ -85,13 +85,17 @@ export default {
   computed: {
     auth() {
       return this.$store.state.auth;
+    },
+    notesBtn(){
+      if (!this.notesVisible) return 'Add Notes'
+      return 'Hide Notes'
     }
   },
   firestore() {
     return {
       people: db.collection("people"),
       locations: db.collection("locations")
-    };
+    }
   },
 
   methods: {
