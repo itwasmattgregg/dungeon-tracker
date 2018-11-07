@@ -3,14 +3,7 @@
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5 mb-5>
         <h1>Stories</h1>
-        <v-btn
-          to="add-story">
-          Create Story
-        </v-btn>
-
       </v-flex>
-    </v-layout>
-    <v-layout row wrap>
       <v-flex xs12 sm6 v-for="(story, index) in stories" :key="index">
         <v-card mb-3 color="blue-grey darken-2" class="story-card white--text">
           <v-card-title primary-title>
@@ -23,12 +16,15 @@
         </v-card>
       </v-flex>
     </v-layout>
+     <story-form/>
   </v-container>
 </template>
 
 <script>
-import db from '../firebaseInit'
+import firebase from 'firebase'
+import db from '../../firebaseInit'
 import { mapGetters } from 'vuex'
+import storyForm from '../StoryForm.vue'
 
 export default {
   computed: {
@@ -41,6 +37,14 @@ export default {
       stories: db.collection('stories')
     }
   },
+  components: {
+    storyForm
+  },
+
+  mounted () {
+   
+  },
+  
 }
 </script>
 
