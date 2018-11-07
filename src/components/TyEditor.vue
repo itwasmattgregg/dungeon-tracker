@@ -58,7 +58,7 @@
       <div class="editor__content"
            slot="content"
            slot-scope="props">
-       
+
       </div>
 
     </editor>
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { Editor } from "tiptap";
+import { Editor } from 'tiptap'
 import {
   BlockquoteNode,
   BulletListNode,
@@ -83,22 +83,22 @@ import {
   ItalicMark,
   LinkMark,
   HistoryExtension
-} from "tiptap-extensions";
+} from 'tiptap-extensions'
 export default {
   components: {
     Editor
   },
-  data() {
+  data () {
     return {
       content: {
-        type: "doc",
+        type: 'doc',
         content: [
           {
-            type: "paragraph",
+            type: 'paragraph',
             content: [
               {
-                type: "text",
-                text: "This is some inserted text. 👋"
+                type: 'text',
+                text: 'This is some inserted text. 👋'
               }
             ]
           }
@@ -120,9 +120,9 @@ export default {
         new LinkMark(),
         new HistoryExtension()
       ]
-    };
+    }
   }
-};
+}
 </script>
 <style lang="scss">
 $color-black: black;
