@@ -1,5 +1,5 @@
 <template>
-  <v-list-group 
+  <v-list-group
                 no-action>
     <v-list-tile slot="activator">
 
@@ -11,7 +11,7 @@
     </v-list-tile>
     <v-list-tile>
       <p>All quest details need to go here</p>
-    
+
 
 
     </v-list-tile>
@@ -22,15 +22,8 @@
 
 <script>
 export default {
-    props: {
-        quest: Object
-    },
-    
-
-};
+  props: {
+    quest: Object
+  },
+}
 </script>
-
-<style lang="scss" scoped>
-
-</style>
-

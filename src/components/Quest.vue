@@ -97,16 +97,16 @@
 </template>
 
 <script>
-import moment from "moment";
-import db from "../firebaseInit";
-import omit from "lodash/omit";
+import moment from 'moment'
+import db from '../firebaseInit'
+import omit from 'lodash/omit'
 
 export default {
-  name: "quest",
-  data() {
+  name: 'quest',
+  data () {
     return {
       editing: false
-    };
+    }
   },
   props: {
     quest: {
@@ -115,29 +115,29 @@ export default {
     }
   },
   computed: {
-    formattedTime() {
+    formattedTime () {
       if (this.quest.created) {
-        return moment(this.quest.created.seconds * 1000).fromNow();
+        return moment(this.quest.created.seconds * 1000).fromNow()
       }
     }
   },
   methods: {
-    saveQuest() {
-      const questToSave = omit(this.quest, ".key");
-      db.collection("quests")
-        .doc(this.quest[".key"])
+    saveQuest () {
+      const questToSave = omit(this.quest, '.key')
+      db.collection('quests')
+        .doc(this.quest['.key'])
         .update(questToSave)
         .then(() => {
-          this.editing = false;
-        });
+          this.editing = false
+        })
     },
-    deleteQuest(quest) {
-      db.collection("quests")
-        .doc(quest[".key"])
-        .delete();
+    deleteQuest (quest) {
+      db.collection('quests')
+        .doc(quest['.key'])
+        .delete()
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

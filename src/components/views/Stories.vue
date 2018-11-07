@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 import db from '../../firebaseInit'
 import { mapGetters } from 'vuex'
 import storyForm from '../StoryForm.vue'
@@ -40,11 +39,6 @@ export default {
   components: {
     storyForm
   },
-
-  mounted () {
-   
-  },
-  
 }
 </script>
 

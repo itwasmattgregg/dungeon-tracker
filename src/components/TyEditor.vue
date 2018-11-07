@@ -1,68 +1,82 @@
 <template>
   <div>
-
-    <editor class="editor"
-            :extensions="extensions">
-
-      <div class="menubar is-hidden"
-           :class="{ 'is-focused': focused }"
-           slot="menubar"
-           slot-scope="{ nodes, marks, focused }">
+    <editor
+      class="editor"
+      :extensions="extensions"
+    >
+      <div
+        class="menubar is-hidden"
+        :class="{ 'is-focused': focused }"
+        slot="menubar"
+        slot-scope="{ nodes, marks, focused }"
+      >
         <div v-if="nodes && marks">
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': marks.bold.active() }"
-                  @click="marks.bold.command">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': marks.bold.active() }"
+            @click="marks.bold.command"
+          >
             <v-icon>format_bold</v-icon>
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': marks.italic.active() }"
-                  @click="marks.italic.command">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': marks.italic.active() }"
+            @click="marks.italic.command"
+          >
             <v-icon>format_italic</v-icon>
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': nodes.heading.active({ level: 1 }) }"
-                  @click="nodes.heading.command({ level: 1 })">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': nodes.heading.active({ level: 1 }) }"
+            @click="nodes.heading.command({ level: 1 })"
+          >
             H1
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': nodes.heading.active({ level: 2 }) }"
-                  @click="nodes.heading.command({ level: 2 })">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': nodes.heading.active({ level: 2 }) }"
+            @click="nodes.heading.command({ level: 2 })"
+          >
             H2
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': nodes.heading.active({ level: 3 }) }"
-                  @click="nodes.heading.command({ level: 3 })">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': nodes.heading.active({ level: 3 }) }"
+            @click="nodes.heading.command({ level: 3 })"
+          >
             H3
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': nodes.bullet_list.active() }"
-                  @click="nodes.bullet_list.command">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': nodes.bullet_list.active() }"
+            @click="nodes.bullet_list.command"
+          >
             <v-icon>format_list_bulleted</v-icon>
           </button>
 
-          <button class="menubar__button"
-                  :class="{ 'is-active': nodes.ordered_list.active() }"
-                  @click="nodes.ordered_list.command">
+          <button
+            class="menubar__button"
+            :class="{ 'is-active': nodes.ordered_list.active() }"
+            @click="nodes.ordered_list.command"
+          >
             <v-icon>format_list_numbered</v-icon>
           </button>
-
         </div>
       </div>
 
-      <div class="editor__content"
-           slot="content"
-           slot-scope="props">
-
+      <div
+        class="editor__content"
+        slot="content"
+        slot-scope="props"
+      >
       </div>
-
     </editor>
-
   </div>
 </template>
 

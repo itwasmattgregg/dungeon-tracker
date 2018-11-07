@@ -65,13 +65,13 @@
 </template>
 
 <script>
-import db from "../../firebaseInit.js";
-import firebase from "firebase";
+import db from '../../firebaseInit.js'
+import firebase from 'firebase'
 
 // Components
-import questForm from "../QuestForm.vue";
-import quest from "../Quest.vue";
-import questComplete from "../QuestComplete.vue";
+import questForm from '../QuestForm.vue'
+import quest from '../Quest.vue'
+import questComplete from '../QuestComplete.vue'
 
 export default {
   components: {
@@ -79,58 +79,55 @@ export default {
     quest,
     questComplete
   },
-  data() {
+  data () {
     return {
       loading: true,
       showCompleted: false,
       openQuests: [],
       completedQuests: []
-    };
+    }
   },
   computed: {
-    quests() {
+    quests () {
       if (this.showCompleted) {
-        return this.completedQuests;
+        return this.completedQuests
       } else {
-        return this.openQuests;
+        return this.openQuests
       }
     }
   },
   watch: {
-    quests() {
+    quests () {
       if (this.openQuests.length) {
-        this.loading = false;
+        this.loading = false
       }
     }
   },
-  firestore() {
+  firestore () {
     return {
       completedQuests: db
-        .collection("quests")
-        .where("status", "==", "completed"),
-      openQuests: db.collection("quests").where("status", "==", "open")
-    };
+        .collection('quests')
+        .where('status', '==', 'completed'),
+      openQuests: db.collection('quests').where('status', '==', 'open')
+    }
   },
   methods: {
-    archiveQuest(quest) {
-      db.collection("quests")
-        .doc(quest[".key"])
+    archiveQuest (quest) {
+      db.collection('quests')
+        .doc(quest['.key'])
         .update({
-          status: "completed",
+          status: 'completed',
           dateCompleted: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        })
     },
-    reOpenQuest(quest) {
-      db.collection("quests")
-        .doc(quest[".key"])
+    reOpenQuest (quest) {
+      db.collection('quests')
+        .doc(quest['.key'])
         .update({
-          status: "open",
+          status: 'open',
           dateCompleted: null
-        });
+        })
     }
   }
-};
+}
 </script>
-
-<style>
-</style>

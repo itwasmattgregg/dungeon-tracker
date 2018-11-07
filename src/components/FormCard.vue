@@ -12,7 +12,7 @@
     </v-btn>
     <!-- TODO::auto focus on first input once form opens -->
     <transition name="ty-scale">
-      
+
       <portal :to="target" slim :disabled="target === undefined">
       <div class="card"
            v-if="isVisible">
@@ -26,30 +26,30 @@
 
 <script>
 export default {
-  name: "FormCard",
-  props:{
-    target: String 
+  name: 'FormCard',
+  props: {
+    target: String
   },
-  data() {
+  data () {
     return {
       isVisible: false,
-    };
+    }
   },
   computed: {
-    buttonColor() {
+    buttonColor () {
       if (!this.isVisible) {
-        return "green";
+        return 'green'
       } else {
-        return "red";
+        return 'red'
       }
     }
   },
   methods: {
-    closeCard() {
-      isVisible = false
+    closeCard () {
+      this.isVisible = false
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

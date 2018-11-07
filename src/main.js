@@ -39,11 +39,6 @@ firebase.auth()
       router,
       store,
       render: h => h(App, this.user),
-      data: () => {
-        return {
-          user: null
-        }
-      },
       created () {
         if (user) {
           this.$store.dispatch('autoSignIn', user)

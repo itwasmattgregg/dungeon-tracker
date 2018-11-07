@@ -1,63 +1,31 @@
+import db from '../../firebaseInit'
+
 const state = {
   availableCampaigns: [],
   selectedCampaign: null
 }
 
-// getters
-const getters = {
-  // cartProducts: (state, getters, rootState) => {
-  //   return state.items.map(({ id, quantity }) => {
-  //     const product = rootState.products.all.find(product => product.id === id)
-  //     return {
-  //       title: product.title,
-  //       price: product.price,
-  //       quantity
-  //     }
-  //   })
-  // },
-
-  // cartTotalPrice: (state, getters) => {
-  //   return getters.cartProducts.reduce((total, product) => {
-  //     return total + product.price * product.quantity
-  //   }, 0)
-  // }
-}
-
 // actions
 const actions = {
-  // checkout ({ commit, state }, products) {
-  //   const savedCartItems = [...state.items]
-  //   commit('setCheckoutStatus', null)
-  //   // empty cart
-  //   commit('setCartItems', { items: [] })
-  //   shop.buyProducts(
-  //     products,
-  //     () => commit('setCheckoutStatus', 'successful'),
-  //     () => {
-  //       commit('setCheckoutStatus', 'failed')
-  //       // rollback to the cart saved before sending the request
-  //       commit('setCartItems', { items: savedCartItems })
-  //     }
-  //   )
-  // },
+  getCampaigns ({ commit, state }) {
+    let cities = []
+    db.collection('campaigns').onSnapshot(function (querySnapshot) {
+      cities = []
+      querySnapshot.forEach(function (doc) {
+        cities.push(doc.data().name)
+      })
+      console.log(cities)
+    })
 
-  // addProductToCart ({ state, commit }, product) {
-  //   commit('setCheckoutStatus', null)
-  //   if (product.inventory > 0) {
-  //     const cartItem = state.items.find(item => item.id === product.id)
-  //     if (!cartItem) {
-  //       commit('pushProductToCart', { id: product.id })
-  //     } else {
-  //       commit('incrementItemQuantity', cartItem)
-  //     }
-  //     // remove 1 item from stock
-  //     commit('products/decrementProductInventory', { id: product.id }, { root: true })
-  //   }
-  // }
+    commit('setCampaigns', cities)
+  }
 }
 
 // mutations
 const mutations = {
+  setCampaigns (state, payload) {
+    state.availableCampaigns = payload
+  }
   // pushProductToCart (state, { id }) {
   //   state.items.push({
   //     id,
@@ -82,7 +50,6 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getters,
   actions,
   mutations
 }

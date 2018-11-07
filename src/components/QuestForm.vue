@@ -59,91 +59,85 @@
 </template>
 
 <script>
-import firebase from "firebase";
-import db from "../firebaseInit";
-import FormCard from "./FormCard";
+import firebase from 'firebase'
+import db from '../firebaseInit'
+import FormCard from './FormCard'
 
 export default {
-  name: "quest-form",
+  name: 'quest-form',
   components: {
     FormCard
   },
-  data() {
+  data () {
     return {
-      form:{
-        name: "",
+      form: {
+        name: '',
         location: null,
-        returnTo: "",
-        rewards: "",
-        notes: ""
+        returnTo: '',
+        rewards: '',
+        notes: ''
       },
       notesVisible: false,
       locations: [],
       people: []
-    };
+    }
   },
   computed: {
-    auth() {
-      return this.$store.state.auth;
+    auth () {
+      return this.$store.state.auth
     },
-    notesBtn(){
+    notesBtn () {
       if (!this.notesVisible) return 'Add Notes'
       return 'Hide Notes'
     }
   },
-  firestore() {
+  firestore () {
     return {
-      people: db.collection("people"),
-      locations: db.collection("locations")
+      people: db.collection('people'),
+      locations: db.collection('locations')
     }
   },
 
   methods: {
-    closeCard() {
-      this.$emit("close")
-     console.log('close trig');
-     
+    closeCard () {
+      this.$emit('close')
     },
-    createQuest() {
-
-      if(!this.form.location['.key']){
-        console.log('added new location');        
-        db.collection("locations").add({
+    createQuest () {
+      if (!this.form.location['.key']) {
+        db.collection('locations').add({
           name: this.form.location
         })
       }
-      if(!this.form.returnTo['.key']){
-        console.log('added person');
-        
-        db.collection("people").add({
+      if (!this.form.returnTo['.key']) {
+        db.collection('people').add({
           name: this.form.returnTo
         })
       }
 
-      db.collection("quests")
+      db.collection('quests')
         .add({
           name: this.form.name,
           location: this.form.location,
           returnTo: this.form.returnTo,
           rewards: this.form.rewards,
-          status: "open",
+          status: 'open',
           notes: this.form.notes,
           createdBy: this.auth.user.id,
           created: firebase.firestore.FieldValue.serverTimestamp()
         })
         .then(docRef => {
-          this.resetFields();
-          this.$emit("close");
+          this.resetFields()
+          this.$emit('close')
         })
         .catch(error => {
-          console.error("Error adding document: ", error);
-        });
+          console.error('Error adding document: ', error)
+        })
     },
-    resetFields() {
-     this.form = {}
+    resetFields () {
+      this.form = {}
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
